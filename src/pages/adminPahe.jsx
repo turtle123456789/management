@@ -39,6 +39,7 @@ const AdminPage = () => {
         form.append('name', formData.name);
         form.append('email', formData.email);
         form.append('phone', formData.phoneNumber);
+        form.append('avatar', formData.avatar);
         try {
             const response = await axios.post('https://backen-management.onrender.com/api/createCustomer', form, {
                 headers: {
