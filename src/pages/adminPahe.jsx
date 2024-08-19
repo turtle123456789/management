@@ -164,7 +164,7 @@ const AdminPage = () => {
                                 {data?.phone}
                             </td>
                             <td className="px-6 py-4">
-                                <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={`http://localhost:3001${data?.avatar}`} alt="Quy Phạm"/>
+                                <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={`https://backen-management.onrender.com${data?.avatar}`} alt="Quy Phạm"/>
                             </td>
                         </tr>
                         )
