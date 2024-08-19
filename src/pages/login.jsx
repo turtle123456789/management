@@ -13,6 +13,7 @@ const LoginPage = () => {
         event.preventDefault()
         try{
             const response = await axios.get(`https://backen-management.onrender.com/api/customers/${phone}`)
+            console.log('response', response)
             localStorage.setItem("userLogin",JSON.stringify(response.data.customer))
             if(response.data.customer.isAdmin){
                 navigate('/admin')

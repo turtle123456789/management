@@ -1,10 +1,8 @@
 import './App.css';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { routes } from './routes';
 
 function App() {
-  const navigate = useNavigate()
-  navigate('/login')
   return (
     <div className="App bg-gray-800 h-full">
       <Routes>
