@@ -11,10 +11,10 @@ const [listCustomer,setListCustomer]= useState([])
 const [message,setMessage] = useState({})
 const user = JSON.parse(localStorage.getItem('userLogin'))
 const navigate = useNavigate()
+if(!user.isAdmin){
+    navigate('/home')
+}
 useEffect(()=>{
-    if(!user.isAdmin){
-        navigate('/home')
-    }
     fetchData();
 },[])
 const fetchData = async() => {
@@ -421,7 +421,7 @@ return (
                         {new Intl.NumberFormat('vi-VN').format(data?.amountPaid)}đ
                         </td>
                         <td className="px-6 py-4">
-                            <input  type="checkbox" value="" className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            {data?.status}
                         </td>
                         <td className="px-6 py-4">
                             <button type='button' onClick={()=>openModalEdit(data?.phone)}>
