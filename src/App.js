@@ -1,8 +1,12 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { routes } from './routes';
-
+import { useEffect } from 'react';
 function App() {
+  const navigete= useNavigate()
+  useEffect(()=>{
+    navigete('/login');
+  },[])
   return (
     <div className="App bg-gray-800 h-full">
       <Routes>
