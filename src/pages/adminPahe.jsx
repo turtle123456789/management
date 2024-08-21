@@ -241,7 +241,7 @@ const createCustomer = async (e) => {
 
 
 return (
-<div className="relative shadow-md sm:rounded-lg flex mt-4 justify-center h-screen ">
+<div className="relative shadow-md  sm:rounded-lg mt-4 justify-center h-screen ">
     <div className="fixed top-2">
         <div id="toast-danger" className={`${message.status==="Error"?"flex":"hidden"} items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800`} role="alert">
             <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
@@ -274,7 +274,7 @@ return (
             </button>
         </div>
     </div>
-    <div className='h-full'>
+    <div >
         <div className={`${open ? "flex" : "hidden"} bg-[#000000ea] overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
             <div>
                 <div className='flex'>
@@ -369,79 +369,83 @@ return (
 
             </div>
         </div>
-        <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>Bảng khách hàng</h1>
-        <div className='float-end w-[280px]'>
-            <button type="button" onClick={openModal} className=" py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Thêm khách hàng</button>
-            <button type="button" onClick={deleteAll} className={`${checkAll?"":"hidden"}  py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700`}>Xóa tất cả</button>
-        </div>
-        <table className=" mt-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" className="px-6 py-3">
-                        <input onChange={(e) => setCheckAll(e.target.checked)}   type="checkbox" value="" className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Số thứ tự
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Số điện thoại
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Họ tên
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Số tiền
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Thanh toán
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Thao tác
-                    </th>
-                </tr>
-            </thead>
-            <tbody className='w-full'>
-                {listCustomer?.map((data,index)=>{
-                    return(
-                    <tr key={`customer-${index}`} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <input checked={checkAll}  type="checkbox" value="" className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+        <h1 className='text-xl font-bold leading-tight tracking-tight mb-2 text-gray-900 md:text-2xl dark:text-white'>Bảng khách hàng</h1>
+        
+        <div className=' relative max-w-[950px] mx-auto overflow-x-auto shadow-md sm:rounded-lg'>
+            <div className=' w-[280px]'>
+                <button type="button" onClick={openModal} className=" py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Thêm khách hàng</button>
+                <button type="button" onClick={deleteAll} className={`${checkAll?"":"hidden"}  py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700`}>Xóa tất cả</button>
+            </div>
+            <table className=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">
+                            <input onChange={(e) => setCheckAll(e.target.checked)}   type="checkbox" value="" className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </th>
-                        <td className="px-6 py-4">
-                            {index+1}
-                        </td>
-                        <td className="px-6 py-4">
-                            {data?.phone} 
-                        </td>
-                        <td className="px-6 py-4">
-                            {data?.name}
-                        </td>
-                        <td className="px-6 py-4">
-                        {new Intl.NumberFormat('vi-VN').format(data?.amountPaid)}đ
-                        </td>
-                        <td className="px-6 py-4">
-                            {data?.status}
-                        </td>
-                        <td className="px-6 py-4">
-                            <button type='button' onClick={()=>openModalEdit(data?.phone)}>
-                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                                </svg>              
-                            </button>
-                            <button type='button' onClick={()=>deleteUser(data?.phone)}>
-                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-                                </svg>
-                            </button>
-                        </td>
-
+                        <th scope="col" className="px-6 py-3">
+                            Số thứ tự
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Số điện thoại
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Họ tên
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Số tiền
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Thanh toán
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Thao tác
+                        </th>
                     </tr>
-                    )
-                })}
-            </tbody>
-        </table>        
+                </thead>
+                <tbody className='w-full'>
+                    {listCustomer?.map((data,index)=>{
+                        return(
+                        <tr key={`customer-${index}`} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <input checked={checkAll}  type="checkbox" value="" className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            </th>
+                            <td className="px-6 py-4">
+                                {index+1}
+                            </td>
+                            <td className="px-6 py-4">
+                                {data?.phone} 
+                            </td>
+                            <td className="px-6 py-4">
+                                {data?.name}
+                            </td>
+                            <td className="px-6 py-4">
+                            {new Intl.NumberFormat('vi-VN').format(data?.amountPaid)}đ
+                            </td>
+                            <td className="px-6 py-4">
+                                {data?.status}
+                            </td>
+                            <td className="px-6 py-4">
+                                <button type='button' onClick={()=>openModalEdit(data?.phone)}>
+                                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                    </svg>              
+                                </button>
+                                <button type='button' onClick={()=>deleteUser(data?.phone)}>
+                                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                    </svg>
+                                </button>
+                            </td>
+
+                        </tr>
+                        )
+                    })}
+                </tbody>
+            </table>        
+        </div>
     </div>
+   
 </div>
 )
 }

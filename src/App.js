@@ -8,7 +8,7 @@ function App() {
     navigete('/login');
   },[])
   return (
-    <div className="App bg-gray-800 h-full">
+    <div className="App bg-white dark:bg-gray-800 h-full overflow-hidden">
       <Routes>
         {routes.map((route,index) =>(
           <Route key={`route-${index}`} path={route.path} element={route.element}>

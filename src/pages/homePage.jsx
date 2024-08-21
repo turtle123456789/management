@@ -6,12 +6,20 @@ const HomePage = () => {
   return (
     <div>
         <div className='flex items-center justify-center h-screen'>
-            <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <div className="flex flex-col items-center py-10">
-                    <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={`https://backen-management.onrender.com${user?.avatar}`} alt="Quy Phạm"/>
-                    <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user.name}</h5>
-                    <h4 className="mb-1 text-lg font-medium text-gray-900 dark:text-white">{user.phone}</h4>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">{user.email}</span>
+            <div className="w-full max-w-[1050px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <h1 className='text-3xl font-medium text-gray-900 dark:text-white'>Thông tin khách hàng</h1>
+                <div className='p-11'>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Họ tên khách: <span className='ml-4 text-lg'>{user.name}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Số điện thoại: <span className='ml-4 text-lg'>{user.phone}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Số lượng khoản vay: <span className='ml-4 text-lg'>{user.debt}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Số tiền vay: <span className='ml-4 text-lg'>{user.loan}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Lãi suất: <span className='ml-4 text-lg'>{user.interestRate}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Phí dịch vụ: <span className='ml-4 text-lg'>{user.serviceFee}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Miễn giảm: <span className='ml-4 text-lg'>{user.exemption}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Số tiền cần thanh toán: <span className='ml-4 text-lg'>{user.amountPaid}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Ngày vay: <span className='ml-4 text-lg'>{user.status}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Thời hạn thanh toán: <span className='ml-4 text-lg'>{user.loanDate}</span></p>
+                    <p className="mb-1 flex text-xl font-medium text-gray-900 dark:text-white">Tình trạng: <span className='ml-4 text-lg'>{user.paymentTerm}</span></p>
                 </div>
             </div>
         </div>
