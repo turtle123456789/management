@@ -30,7 +30,7 @@ const LoginPage = () => {
         // navigate('/home')
     }
     return (
-        <div className='bg-[#00000038] bg-blend-multiply h-screen flex items-center justify-center bg-no-repeat' >
+        <div className='bg-gradient-to-bl from-blue-500 via-white via-50% to-blue-500  h-screen flex items-center justify-center' >
             <div className="fixed top-2">
                 <div id="toast-danger" className={`${message.status==="Error"?"flex":"hidden"} items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800`} role="alert">
                     <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
