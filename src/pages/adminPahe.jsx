@@ -20,7 +20,6 @@ useEffect(()=>{
 const fetchData = async() => {
     const data = await axios.get("https://backen-management.onrender.com/api/getCustomer")
     if (data?.status === 200){
-        console.log('data?.data', data?.data)
         setListCustomer(data?.data.customers)
     }
 }
@@ -41,7 +40,6 @@ const [formData, setFormData] = useState({
 
 
     const handleChange = (e) => {
-    console.log('formData', formData)
     const { name, value, type, files } = e.target;
     setFormData({
         ...formData,
@@ -53,7 +51,6 @@ const [formData, setFormData] = useState({
         const response = await axios.delete("https://backen-management.onrender.com/api/deleteAllCustomers", {
         data: { isAdmin: user.isAdmin }
         });
-        console.log('response', response)
         setMessage({status:"Success",message:"Xóa thành công."})
         fetchData();
         setTimeout(() => {
@@ -71,7 +68,6 @@ const [formData, setFormData] = useState({
         if (phone !== "") {
             try {
                 const response = await axios.get(`https://backen-management.onrender.com/api/customers/${phone}`);
-                console.log('customer', response.data.customer);
                 setIdUpdate(response.data.customer._id)
                 setFormData({
                     name: response.data.customer.name,
@@ -110,7 +106,7 @@ const [formData, setFormData] = useState({
             status: formData.status,
             loanDate: formData.loanDate,
             paymentTerm: formData.paymentTerm,
-            note: formData.customer.note,
+            note: formData.note,
         }
         try {
             const response = await axios.put(`https://backen-management.onrender.com/api/editCustomer/${idUpdate}`, updateCustomer, {
@@ -118,7 +114,6 @@ const [formData, setFormData] = useState({
                     'Content-Type': 'application/json',
                 }
             });
-            console.log('response', response);
             fetchData();
             setMessage({ status: "Success", message: "Cập nhập thành công." });
             setOpen(false);
@@ -155,7 +150,6 @@ const [formData, setFormData] = useState({
           const response = await axios.delete(`https://backen-management.onrender.com/api/deleteCustomer/${phone}`, {
             data: { isAdmin: user.isAdmin }
           });
-          console.log('response', response)
           setMessage({status:"Success",message:"Xóa thành công."})
           fetchData();
             setTimeout(() => {
@@ -204,14 +198,12 @@ const createCustomer = async (e) => {
         paymentTerm: formData.paymentTerm,
         note: formData.note
     }
-    console.log('newCustomer', newCustomer)
     try {
         const response = await axios.post('https://backen-management.onrender.com/api/createCustomer', newCustomer, {
             headers: {
                 'Content-Type': 'application/json',
             }
         });
-        console.log('response', response)
         fetchData(); // Refresh data
         setOpen(false); // Close form or modal
         setMessage({ status: "Success", message: "Customer created successfully!" }); // Show success message
@@ -249,7 +241,7 @@ const createCustomer = async (e) => {
 
 return (
 <div className="relative shadow-md  sm:rounded-lg mt-4 justify-center h-screen ">
-    <div className="fixed top-2">
+    <div className="fixed top-2 left-[45%]">
         <div id="toast-danger" className={`${message.status==="Error"?"flex":"hidden"} items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800`} role="alert">
             <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
                 <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -353,7 +345,7 @@ return (
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Lưu ý:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="text" name='note'  value={formData.note} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="text" name='note'  value={formData.note} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lưu ý</label>
                         </div>
                     </div>
