@@ -29,6 +29,7 @@ const HomePage = () => {
                     <p className="mb-1 flex text-xl font-bold text-gray-900 dark:text-white">Ngày vay: <span className={`ml-4 font-medium text-lg`} style={{ color }}>{user.status}</span></p>
                     <p className="mb-1 flex text-xl font-bold text-gray-900 dark:text-white">Thời hạn thanh toán: <span className='ml-4 font-medium text-lg'>{user.loanDate}</span></p>
                     <p className="mb-1 flex text-xl font-bold text-gray-900 dark:text-white">Tình trạng: <span className='ml-4 font-medium text-lg'>{user.paymentTerm}</span></p>
+                    <p className="mb-1 flex text-xl font-bold text-gray-900 dark:text-white">Lưu ý: <span className='ml-4 font-medium text-lg'>{user.note}</span></p>
                 </div>
             </div>
         </div>
