@@ -36,6 +36,7 @@ const [formData, setFormData] = useState({
     status: '',
     loanDate: '',
     paymentTerm: '',
+    note:'',
 });
 
 
@@ -84,6 +85,7 @@ const [formData, setFormData] = useState({
                     status: response.data.customer.status,
                     loanDate: response.data.customer.loanDate,
                     paymentTerm: response.data.customer.paymentTerm,
+                    note: response.data.customer.note,
                 });
                 setOpen(true);
             } catch (error) {
@@ -107,7 +109,8 @@ const [formData, setFormData] = useState({
             amountPaid: formData.amountPaid,
             status: formData.status,
             loanDate: formData.loanDate,
-            paymentTerm: formData.paymentTerm
+            paymentTerm: formData.paymentTerm,
+            note: response.data.customer.note,
         }
         try {
             const response = await axios.put(`https://backen-management.onrender.com/api/editCustomer/${idUpdate}`, updateCustomer, {
@@ -131,6 +134,7 @@ const [formData, setFormData] = useState({
                 status: '',
                 loanDate: '',
                 paymentTerm: '',
+                note: ''
             });
     
             setTimeout(() => {
@@ -178,6 +182,7 @@ const openModal = () => {
         status: '',
         loanDate: '',
         paymentTerm: '',
+        note: ''
     });
     setTypeAction('add')
     setOpen(!open)
@@ -196,7 +201,8 @@ const createCustomer = async (e) => {
         amountPaid: formData.amountPaid,
         status: formData.status,
         loanDate: formData.loanDate,
-        paymentTerm: formData.paymentTerm
+        paymentTerm: formData.paymentTerm,
+        note: formData.note
     }
     console.log('newCustomer', newCustomer)
     try {
@@ -221,6 +227,7 @@ const createCustomer = async (e) => {
             status: '',
             loanDate: '',
             paymentTerm: '',
+            note:''
         });
 
         setTimeout(() => {
@@ -341,6 +348,13 @@ return (
                         <div className="relative z-0 w-full group ml-2">
                             <input type="text" name='status'  value={formData.status} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tình trạng</label>
+                        </div>
+                    </div>
+                    <div className='flex items-center mb-2'>
+                        <p className='text-md whitespace-nowrap text-[#fff]'>Lưu ý:</p>
+                        <div className="relative z-0 w-full group ml-2">
+                            <input type="text" name='note'  value={formData.note} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lưu ý</label>
                         </div>
                     </div>
                     <button type="submit" className="float-end py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">{typeAction==='add'?"Thêm":"Cập nhập"}</button>
