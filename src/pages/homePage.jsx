@@ -3,11 +3,17 @@ import React, { useEffect, useState } from 'react'
 const HomePage = () => {
   const [color,setColor] = useState("")
   const user = JSON.parse(localStorage.getItem("userLogin"))
+  console.log('user', user.status)
+  console.log('color', color)
+  const status = user.status.trim().toLowerCase();
+
+
   useEffect(()=>{
-    if(user.status==="đã thanh toán" || "Đã thanh toán " || "Đã Thanh Toán" || "ĐÃ THANH TOÁN" )
+    console.log('stádasdatus', status)
+    if(status==="đã thanh toán" || status==="Đã thanh toán " || status==="Đã Thanh Toán" || status==="ĐÃ THANH TOÁN" || status==="da thanh toan")
       { 
         setColor("#05ff71")
-      }else if(user.status==="chưa thanh toán" || "Chưa thanh toán " || "Chưa Thanh Toán" || "CHƯA THANH TOÁN")
+      }else if(status==="chưa thanh toán" || status==="Chưa thanh toán " || status==="Chưa Thanh Toán" || status==="CHƯA THANH TOÁN" || status==="chua thanh toan")
       {
         setColor("#ff0505")
       }else{

@@ -110,7 +110,7 @@ const [formData, setFormData] = useState({
             status: formData.status,
             loanDate: formData.loanDate,
             paymentTerm: formData.paymentTerm,
-            note: response.data.customer.note,
+            note: formData.customer.note,
         }
         try {
             const response = await axios.put(`https://backen-management.onrender.com/api/editCustomer/${idUpdate}`, updateCustomer, {
