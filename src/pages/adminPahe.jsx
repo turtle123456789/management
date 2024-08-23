@@ -11,6 +11,16 @@ const [listCustomer,setListCustomer]= useState([])
 const [message,setMessage] = useState({})
 const user = JSON.parse(localStorage.getItem('userLogin'))
 const navigate = useNavigate()
+const [searchTerm, setSearchTerm] = useState("");
+
+const filteredCustomers = listCustomer.filter((customer) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      customer?.name?.toLowerCase().includes(searchLower) ||
+      customer?.phone?.toLowerCase().includes(searchLower) ||
+      customer?.citizenCard?.toLowerCase().includes(searchLower)
+    );
+  });
 if(!user?.isAdmin){
     navigate('/home')
 }
@@ -23,6 +33,8 @@ const fetchData = async() => {
         setListCustomer(data?.data.customers)
     }
 }
+
+  
 const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -246,7 +258,7 @@ const createCustomer = async (e) => {
 
 
 return (
-<div className="relative shadow-md  sm:rounded-lg mt-4 justify-center h-screen ">
+<div className="relative shadow-md  sm:rounded-lg mt-4 justify-center">
     <div className="fixed top-2 left-[45%]">
         <div id="toast-danger" className={`${message.status==="Error"?"flex":"hidden"} items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800`} role="alert">
             <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
@@ -280,7 +292,7 @@ return (
         </div>
     </div>
     <div >
-        <div className={`${open ? "flex" : "hidden"} bg-[#000000ea] overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
+        <div className={`${open ? "flex" : "hidden"} bg-[#000000ea] overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center h-screen items-center w-full md:inset-0 max-h-full`}>
             <div>
                 <div className='flex'>
                     <button type="button" onClick={openModal} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
@@ -373,6 +385,16 @@ return (
                 <button type="button" onClick={openModal} className=" py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Thêm khách hàng</button>
                 <button type="button" onClick={deleteAll} className={`${checkAll?"":"hidden"}  py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700`}>Xóa tất cả</button>
             </div>
+            <div className=" py-2 mb-2 bg-white dark:bg-gray-900">
+                <div className="relative m-2">
+                    <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="block py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tìm kiếm ..."/>
+                </div>
+            </div>
             <table className=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -403,7 +425,54 @@ return (
                     </tr>
                 </thead>
                 <tbody className='w-full'>
-                    {listCustomer?.map((data,index)=>{
+                {filteredCustomers.length > 0 ? (
+                    filteredCustomers.map((data, index) => (
+                        <tr key={`customer-${index}`} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <input checked={checkAll}  type="checkbox" value="" className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                        </th>
+                        <td className="px-6 py-4">
+                            {index+1}
+                        </td>
+                        <td className="px-6 py-4">
+                            {data?.phone} 
+                        </td>
+                        <td className="px-6 py-4">
+                            {data?.name}
+                        </td>
+                        <td className="px-6 py-4">
+                            {data?.citizenCard}
+                        </td>
+                        <td className="px-6 py-4">
+                        {data?.amountPaid}đ
+                        </td>
+                        <td className="px-6 py-4">
+                            {data?.status}
+                        </td>
+                        <td className="px-6 py-4">
+                            <button type='button' onClick={()=>openModalEdit(data?.phone)}>
+                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                </svg>              
+                            </button>
+                            <button type='button' onClick={()=>deleteUser(data?.phone)}>
+                                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                </svg>
+                            </button>
+                        </td>
+
+                    </tr>
+                    ))
+                ) : (
+                    <tr>
+                    <td colSpan="8" className="text-center py-4">
+                        Không tìm thấy khách hàng
+                    </td>
+                    </tr>
+                )}
+                    {/* {listCustomer?.map((data,index)=>{
                         return(
                         <tr key={`customer-${index}`} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                             
@@ -423,7 +492,7 @@ return (
                                 {data?.citizenCard}
                             </td>
                             <td className="px-6 py-4">
-                            {new Intl.NumberFormat('vi-VN').format(data?.amountPaid)}đ
+                            {data?.amountPaid}đ
                             </td>
                             <td className="px-6 py-4">
                                 {data?.status}
@@ -443,7 +512,7 @@ return (
 
                         </tr>
                         )
-                    })}
+                    })} */}
                 </tbody>
             </table>        
         </div>

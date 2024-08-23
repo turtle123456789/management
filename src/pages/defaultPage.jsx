@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 const DefaultPage = () => {
   return (
-    <div>
+    <div className='min-h-screen'>
         <HeaderComponent/>
         <Outlet/>
     </div>
