@@ -11,7 +11,7 @@ const [listCustomer,setListCustomer]= useState([])
 const [message,setMessage] = useState({})
 const user = JSON.parse(localStorage.getItem('userLogin'))
 const navigate = useNavigate()
-if(!user.isAdmin){
+if(!user?.isAdmin){
     navigate('/home')
 }
 useEffect(()=>{
@@ -36,6 +36,7 @@ const [formData, setFormData] = useState({
     loanDate: '',
     paymentTerm: '',
     note:'',
+    citizenCard:'',
 });
 
 
@@ -49,7 +50,7 @@ const [formData, setFormData] = useState({
     const deleteAll = async () => {
     try {
         const response = await axios.delete("https://backen-management.onrender.com/api/deleteAllCustomers", {
-        data: { isAdmin: user.isAdmin }
+        data: { isAdmin: user?.isAdmin }
         });
         setMessage({status:"Success",message:"Xóa thành công."})
         fetchData();
@@ -68,25 +69,25 @@ const [formData, setFormData] = useState({
         if (phone !== "") {
             try {
                 const response = await axios.get(`https://backen-management.onrender.com/api/customers/${phone}`);
-                setIdUpdate(response.data.customer._id)
+                setIdUpdate(response?.data?.customer?._id)
                 setFormData({
-                    name: response.data.customer.name,
-                    phone: response.data.customer.phone,
-                    debt: response.data.customer.debt,
-                    loan: response.data.customer.loan,
-                    interestRate: response.data.customer.interestRate,
-                    serviceFee: response.data.customer.serviceFee,
-                    exemption: response.data.customer.exemption,
-                    amountPaid: response.data.customer.amountPaid,
-                    status: response.data.customer.status,
-                    loanDate: response.data.customer.loanDate,
-                    paymentTerm: response.data.customer.paymentTerm,
-                    note: response.data.customer.note,
+                    name: response?.data?.customer?.name,
+                    phone: response?.data?.customer?.phone,
+                    debt: response?.data?.customer?.debt,
+                    loan: response?.data?.customer?.loan,
+                    interestRate: response?.data?.customer?.interestRate,
+                    serviceFee: response?.data?.customer?.serviceFee,
+                    exemption: response?.data?.customer?.exemption,
+                    amountPaid: response?.data?.customer?.amountPaid,
+                    status: response?.data?.customer?.status,
+                    loanDate: response?.data?.customer?.loanDate,
+                    paymentTerm: response?.data?.customer?.paymentTerm,
+                    note: response?.data?.customer?.note,
+                    citizenCard: response?.data?.customer?.citizenCard
                 });
                 setOpen(true);
             } catch (error) {
                 console.error('Error fetching customer:', error);
-                // Handle error here without affecting the rest of the site
             }
         }
     };
@@ -94,19 +95,20 @@ const [formData, setFormData] = useState({
     const editUser = async (e) => {
         e.preventDefault();
         const updateCustomer ={
-            isAdmin: user.isAdmin,
-            name: formData.name,
-            phone: formData.phone,
-            debt: formData.debt,
-            loan: formData.loan,
-            interestRate: formData.interestRate,
-            serviceFee: formData.serviceFee,
-            exemption: formData.exemption,
-            amountPaid: formData.amountPaid,
-            status: formData.status,
-            loanDate: formData.loanDate,
-            paymentTerm: formData.paymentTerm,
-            note: formData.note,
+            isAdmin: user?.isAdmin,
+            name: formData?.name,
+            phone: formData?.phone,
+            debt: formData?.debt,
+            loan: formData?.loan,
+            interestRate: formData?.interestRate,
+            serviceFee: formData?.serviceFee,
+            exemption: formData?.exemption,
+            amountPaid: formData?.amountPaid,
+            status: formData?.status,
+            loanDate: formData?.loanDate,
+            paymentTerm: formData?.paymentTerm,
+            note: formData?.note,
+            citizenCard: formData?.citizenCard
         }
         try {
             const response = await axios.put(`https://backen-management.onrender.com/api/editCustomer/${idUpdate}`, updateCustomer, {
@@ -129,7 +131,8 @@ const [formData, setFormData] = useState({
                 status: '',
                 loanDate: '',
                 paymentTerm: '',
-                note: ''
+                note: '',
+                citizenCard: ''
             });
     
             setTimeout(() => {
@@ -148,7 +151,7 @@ const [formData, setFormData] = useState({
        
         try {
           const response = await axios.delete(`https://backen-management.onrender.com/api/deleteCustomer/${phone}`, {
-            data: { isAdmin: user.isAdmin }
+            data: { isAdmin: user?.isAdmin }
           });
           setMessage({status:"Success",message:"Xóa thành công."})
           fetchData();
@@ -176,7 +179,8 @@ const openModal = () => {
         status: '',
         loanDate: '',
         paymentTerm: '',
-        note: ''
+        note: '',
+        citizenCard:''
     });
     setTypeAction('add')
     setOpen(!open)
@@ -184,19 +188,20 @@ const openModal = () => {
 const createCustomer = async (e) => {
     e.preventDefault();
     const newCustomer ={
-        isAdmin: user.isAdmin,
-        name: formData.name,
-        phone: formData.phone,
-        debt: formData.debt,
-        loan: formData.loan,
-        interestRate: formData.interestRate,
-        serviceFee: formData.serviceFee,
-        exemption: formData.exemption,
-        amountPaid: formData.amountPaid,
-        status: formData.status,
-        loanDate: formData.loanDate,
-        paymentTerm: formData.paymentTerm,
-        note: formData.note
+        isAdmin: user?.isAdmin,
+        name: formData?.name,
+        phone: formData?.phone,
+        debt: formData?.debt,
+        loan: formData?.loan,
+        interestRate: formData?.interestRate,
+        serviceFee: formData?.serviceFee,
+        exemption: formData?.exemption,
+        amountPaid: formData?.amountPaid,
+        status: formData?.status,
+        loanDate: formData?.loanDate,
+        paymentTerm: formData?.paymentTerm,
+        note: formData?.note,
+        citizenCard: formData?.citizenCard
     }
     try {
         const response = await axios.post('https://backen-management.onrender.com/api/createCustomer', newCustomer, {
@@ -219,7 +224,8 @@ const createCustomer = async (e) => {
             status: '',
             loanDate: '',
             paymentTerm: '',
-            note:''
+            note:'',
+            citizenCard:'',
         });
 
         setTimeout(() => {
@@ -288,64 +294,70 @@ return (
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Họ tên khách:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="text" name='name'  value={formData.name} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="text" name='name'  value={formData?.name} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tên khách hàng</label>
                         </div>
                     </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Số điện thoại:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="tel" name='phone' value={formData.phone} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="tel" name='phone' value={formData?.phone} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Số điện thoại</label>
                         </div>
                     </div>
-                    
+                    <div className='flex items-center mb-2'>
+                        <p className='text-md whitespace-nowrap text-[#fff]'>Số CCCD:</p>
+                        <div className="relative z-0 w-full group ml-2">
+                            <input type="tel" name='citizenCard' value={formData?.citizenCard} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">CCCD</label>
+                        </div>
+                    </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Số lượng khoản vay:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="text" name='debt' value={formData.debt} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="text" name='debt' value={formData?.debt} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Số lượng khoản vay</label>
                         </div>
                     </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Số tiền vay:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="text" name='loan' value={formData.loan} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="text" name='loan' value={formData?.loan} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Số tiền vay</label>
                         </div>
                     </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Số tiền cần thanh toán:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="text" name='amountPaid' value={formData.amountPaid} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="text" name='amountPaid' value={formData?.amountPaid} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Số tiền cần thanh toán</label>
                         </div>
                     </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Ngày vay:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="date" name='loanDate'  value={formData.loanDate} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="date" name='loanDate'  value={formData?.loanDate} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Ngày vay</label>
                         </div>
                     </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Thời hạn thanh toán:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="date" name='paymentTerm' value={formData.paymentTerm} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="date" name='paymentTerm' value={formData?.paymentTerm} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Thời hạn thanh toán</label>
                         </div>
                     </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Tình trạng:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="text" name='status'  value={formData.status} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <input type="text" name='status'  value={formData?.status} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tình trạng</label>
                         </div>
                     </div>
                     <div className='flex items-center mb-2'>
                         <p className='text-md whitespace-nowrap text-[#fff]'>Lưu ý:</p>
                         <div className="relative z-0 w-full group ml-2">
-                            <input type="text" name='note'  value={formData.note} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                            <input type="text" name='note'  value={formData?.note} onChange={handleChange} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                             <label className="peer-focus:font-medium absolute left-1 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lưu ý</label>
                         </div>
                     </div>
@@ -377,6 +389,9 @@ return (
                             Họ tên
                         </th>
                         <th scope="col" className="px-6 py-3">
+                            Số CCCD
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                             Số tiền
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -403,6 +418,9 @@ return (
                             </td>
                             <td className="px-6 py-4">
                                 {data?.name}
+                            </td>
+                            <td className="px-6 py-4">
+                                {data?.citizenCard}
                             </td>
                             <td className="px-6 py-4">
                             {new Intl.NumberFormat('vi-VN').format(data?.amountPaid)}đ
